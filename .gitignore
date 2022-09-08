@@ -1,3 +1,9 @@
+# Add IDE Dir
+/vendor
+/.idea
+/.vscode
+/test
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
