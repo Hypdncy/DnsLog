@@ -39,9 +39,14 @@ func (app *application) basicAuth(next http.HandlerFunc) http.HandlerFunc {
 				return
 			}
 		}
+		if r.RequestURI != "/" {
+			http.Redirect(w, r, "/", http.StatusMovedPermanently)
+		} else {
+			w.WriteHeader(403)
+			w.Header().Set("WWW-Authenticate", `Basic realm="restricted", charset="UTF-8"`)
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		}
 
-		w.Header().Set("WWW-Authenticate", `Basic realm="restricted", charset="UTF-8"`)
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 	}
 }
 
